@@ -3,10 +3,15 @@ import path from 'path';
 import csv from 'csv-parser';
 import iconv from 'iconv-lite';
 import prisma from '../prisma/db/db';
-import { Prisma } from '@prisma/client'
+import { Property as PrismaProperty } from '@prisma/client';
 
-const results: { origin_id: any; origin: string; state: any; city: any; district: any; address: any; price: any; evaluation_price: any; discont: any; description: any; modality: any; }[] = []
+interface Property extends Omit<PrismaProperty, 'id'> {
+    id?: PrismaProperty['id'];
+}
+
 async function processFile(file: string) {
+    let results: Property[] = [];
+    let dateNow: Date = new Date();
     return new Promise((resolve, reject) => {
         const stream = fs.createReadStream(file);
         const decodeStream = iconv.decodeStream('iso-8859-1');
@@ -18,7 +23,7 @@ async function processFile(file: string) {
             .on('data', async (row) => {
                 headerCount++;
                 if (headerCount > 2 && row["_0"] && row["_1"] && row["_2"] && row["_3"] && row["_4"] && row["_5"] && row["_6"] && row["_7"] && row["_8"] && row["_9"]) {
-                    let property = {
+                    let property: Property = {
                         origin_id: row["_0"].trim(),
                         origin: "Caixa Econômica Federal",
                         state: row["_1"],
@@ -35,9 +40,12 @@ async function processFile(file: string) {
                 }
             })
             .on('end', async () => {
+                let execTime: Number = new Date().getTime() - dateNow.getTime();
+                console.log(`Finished processing ${file.slice(24, 26)} in ${execTime}ms.`)
                 await prisma.property.createMany({
                     data: results
                 })
+                return resolve
             })
             .on('error', reject);
     });

@@ -1,4 +1,0 @@
--- AlterTable
-ALTER TABLE "Property" ALTER COLUMN "price" SET DATA TYPE TEXT,
-ALTER COLUMN "evaluation_price" SET DATA TYPE TEXT,
-ALTER COLUMN "discont" SET DATA TYPE TEXT;

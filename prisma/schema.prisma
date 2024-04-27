@@ -22,7 +22,7 @@ model User {
 
 model Property {
   id               String @id @default(uuid())
-  origin_id        String
+  origin_id        String @unique
   origin           String
   state            String
   city             String
