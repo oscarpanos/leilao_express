@@ -19,3 +19,18 @@ model User {
   password String
   name     String
 }
+
+model Property {
+  id               String @id @default(uuid())
+  origin_id        String
+  origin           String
+  state            String
+  city             String
+  district         String
+  address          String
+  price            String
+  evaluation_price String
+  discont          String
+  description      String
+  modality         String
+}
