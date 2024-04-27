@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "insert-cef": "ts-node download-files/insertData.ts"
+    "download-cef": "node download-files/byStateCEF.js",
+    "cef": "ts-node download-files/insertData.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.10.2",

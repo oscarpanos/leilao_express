@@ -1,7 +1,6 @@
 const puppeteer = require('puppeteer');
 const path = require('path');
 
-
 const sleep = ms => new Promise(res => setTimeout(res, ms));
 const downloadPath = path.resolve('./downloads');
 const dropdownSelector = '#cmb_estado';
@@ -29,11 +28,11 @@ async function downloadFiles() {
             console.log(value);
             // Select option
             await page.select(dropdownSelector, value);
-            await sleep(3000)
+            await sleep(1000)
 
             // Click the download button
             await page.click('#btn_next1');
-            await sleep(3000)
+            await sleep(1000)
         };
     }
 

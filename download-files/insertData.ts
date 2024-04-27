@@ -9,20 +9,29 @@ interface Property extends Omit<PrismaProperty, 'id'> {
     id?: PrismaProperty['id'];
 }
 
+let errorCount: number = 0
+
 async function processFile(file: string) {
     let results: Property[] = [];
     let dateNow: Date = new Date();
+
+    const expectedColumnCount: number = 11;
+    let headerCount: number = 0;
+
     return new Promise((resolve, reject) => {
         const stream = fs.createReadStream(file);
         const decodeStream = iconv.decodeStream('iso-8859-1');
         stream.pipe(decodeStream);
 
-        let headerCount = 0;
+        let stateErrorCount: number = 0;
+
         decodeStream
             .pipe(csv({ separator: ';' }))
             .on('data', async (row) => {
+                const rowArray = Object.values(row);
                 headerCount++;
-                if (headerCount > 2 && row["_0"] && row["_1"] && row["_2"] && row["_3"] && row["_4"] && row["_5"] && row["_6"] && row["_7"] && row["_8"] && row["_9"]) {
+
+                if (headerCount > 4 && rowArray.length === expectedColumnCount) {
                     let property: Property = {
                         origin_id: row["_0"].trim(),
                         origin: "Caixa Econômica Federal",
@@ -30,22 +39,31 @@ async function processFile(file: string) {
                         city: row["_2"],
                         district: row["_3"],
                         address: row["_4"],
-                        price: row["_5"],
-                        evaluation_price: row["_6"],
+                        price: row["_5"].replaceAll(".", '').replace(",", "."),
+                        evaluation_price: row["_6"].replaceAll(".", '').replace(",", "."),
                         discont: row["_7"],
                         description: row["_8"],
                         modality: row["_9"],
+                        url: row["_10"]
                     }
                     results.push(property);
+                } else {
+                    errorCount++;
+                    stateErrorCount++;
+                    console.error(`Skipping row with incorrect format.`);
                 }
             })
             .on('end', async () => {
-                let execTime: Number = new Date().getTime() - dateNow.getTime();
-                console.log(`Finished processing ${file.slice(24, 26)} in ${execTime}ms.`)
+                let execTime: number = new Date().getTime() - dateNow.getTime();
+
+                console.log(`Finished processing ${file.slice(24, 26)} with ${stateErrorCount} erros in ${execTime}ms.`)
+                console.error(`So far ${errorCount} lines were not inserted due to invalid CSV delimiter.`);
+
                 await prisma.property.createMany({
                     data: results
-                })
-                return resolve
+                });
+
+                return resolve;
             })
             .on('error', reject);
     });

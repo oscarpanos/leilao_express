@@ -21,16 +21,17 @@ model User {
 }
 
 model Property {
-  id               String @id @default(uuid())
-  origin_id        String @unique
+  id               String  @id @default(uuid())
+  origin_id        String  @unique
   origin           String
   state            String
   city             String
   district         String
   address          String
-  price            String
-  evaluation_price String
-  discont          String
+  price            Decimal @db.Decimal(10, 2)
+  evaluation_price Decimal @db.Decimal(10, 2)
+  discont          Decimal @db.Decimal(10, 2)
   description      String
   modality         String
+  url              String
 }
