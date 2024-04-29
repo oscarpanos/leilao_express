@@ -28,43 +28,45 @@ export default async function PropertyList() {
   return (
     <div className="flex flex-wrap gap-4 border p-10">
       {properties.map((p) => (
-        <Card className="w-[350px]" key={p.id}>
-          <CardHeader>
-            <CardTitle>
-              {p.district} - {p.city}/{p.state}
-            </CardTitle>
-            <CardDescription>{p.description.split(",")[2]}</CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col items-center">
-            <div className="relative size-40">
-              <Image
-                alt={p.type}
-                src={getPropertyImageURL(p)}
-                sizes="320px"
-                fill
-                style={{ objectFit: "contain" }}
-              />
-            </div>
-            <div className="font-bold"></div>
-            <div className="flex justify-between gap-2">
-              <div className="flex flex-col items-center">
-                <div>Preço</div>
-                <div>{toCurrency(p.price.toString())}</div>
+        <Link href={p.url} key={p.id} target="_blank">
+          <Card className="group flex w-[350px] cursor-pointer flex-col gap-1">
+            <CardHeader className="p-4">
+              <CardTitle className="text-lg">
+                {p.city}/{p.state}
+              </CardTitle>
+              <CardDescription>{p.description.split(",")[2]}</CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-col items-center">
+              <div className="relative h-48 w-full">
+                <Image
+                  alt={p.type}
+                  src={getPropertyImageURL(p)}
+                  sizes="320px"
+                  fill
+                  style={{ objectFit: "cover" }}
+                />
+                <div className="absolute hidden h-full place-items-center bg-white/70 px-4 text-sm group-hover:grid">
+                  {p.description}
+                </div>
               </div>
-              <div className="flex flex-col items-center">
-                <div>Avaliação</div>
-                <div>{toCurrency(p.evaluation_price.toString())}</div>
+              <div className="font-bold"></div>
+              <div className="flex justify-between gap-2">
+                <div className="flex flex-col items-center">
+                  <div>Preço</div>
+                  <div>{toCurrency(p.price.toString())}</div>
+                </div>
+                <div className="flex flex-col items-center">
+                  <div>Avaliação</div>
+                  <div>{toCurrency(p.evaluation_price.toString())}</div>
+                </div>
+                <div className="flex flex-col items-center">
+                  <div>Desconto</div>
+                  <div>{p.discount.toString()}%</div>
+                </div>
               </div>
-              <div className="flex flex-col items-center">
-                <div>Desconto</div>
-                <div>{p.discount.toString()}%</div>
-              </div>
-            </div>
-          </CardContent>
-          <CardFooter>
-            <div className="text-sm">{p.description}</div>
-          </CardFooter>
-        </Card>
+            </CardContent>
+          </Card>
+        </Link>
       ))}
     </div>
   );
