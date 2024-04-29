@@ -34,7 +34,7 @@ export default async function PropertyList() {
           key={p.id}
           target="_blank"
         >
-          <Card className="group flex grow cursor-pointer flex-col gap-1">
+          <Card className="group flex grow cursor-pointer flex-col gap-1 transition-all hover:scale-105 hover:border-slate-400 hover:shadow-lg">
             <CardHeader className="p-4">
               <CardTitle className="text-lg">
                 {p.city}/{p.state}
