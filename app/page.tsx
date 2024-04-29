@@ -1,18 +1,17 @@
-import { getServerSession } from "next-auth";
-
-import { authOptions } from "./api/auth/[...nextauth]/route";
-import { User } from "./user";
-import { LoginButton, LogoutButton } from "./auth/auth";
+import Navbar from "./components/Navbar";
+import PropertyList from "./components/PropertyList";
 
 export default async function Home() {
-  const session = await getServerSession(authOptions);
-
   return (
-    <main className="">
-      <LoginButton />
-      <LogoutButton />
-      <pre>{JSON.stringify(session)}</pre>
-      <User />
-    </main>
+    <>
+      <header>
+        <Navbar />
+      </header>
+      <main>
+        <section>
+          <PropertyList />
+        </section>
+      </main>
+    </>
   );
 }

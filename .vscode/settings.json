@@ -1,12 +1,19 @@
 {
-  "editor.formatOnSave": true,
-  "[javascript]": { // for .js files
+  "[javascript]": {
+    // for .js files
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "[typescript]": { // for .ts files
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[typescript]": {
+    // for .ts files
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "[typescriptreact]": { // for .tsx files
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[typescriptreact]": {
+    // for .tsx files
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "eslint.format.enable": true,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  }
 }

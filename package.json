@@ -13,13 +13,19 @@
   "dependencies": {
     "@prisma/client": "^5.10.2",
     "bcrypt": "^5.1.1",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
     "csv-parser": "^3.0.0",
     "iconv-lite": "^0.6.3",
+    "lucide-react": "^0.376.0",
     "next": "14.1.0",
     "next-auth": "^4.24.6",
+    "prettier-plugin-tailwindcss": "^0.5.14",
     "puppeteer": "^22.7.0",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
@@ -30,7 +36,7 @@
     "@typescript-eslint/parser": "^7.7.1",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
-    "eslint-config-next": "14.1.0",
+    "eslint-config-next": "^14.2.3",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-tailwindcss": "^3.15.1",
