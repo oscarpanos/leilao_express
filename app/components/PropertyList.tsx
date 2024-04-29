@@ -26,10 +26,15 @@ export default async function PropertyList() {
   });
 
   return (
-    <div className="flex flex-wrap gap-4 border p-10">
+    <div className="flex flex-wrap justify-center gap-4 border p-10">
       {properties.map((p) => (
-        <Link href={p.url} key={p.id} target="_blank">
-          <Card className="group flex w-[350px] cursor-pointer flex-col gap-1">
+        <Link
+          className="min-w-[280px] max-w-[420px] grow"
+          href={p.url}
+          key={p.id}
+          target="_blank"
+        >
+          <Card className="group flex grow cursor-pointer flex-col gap-1">
             <CardHeader className="p-4">
               <CardTitle className="text-lg">
                 {p.city}/{p.state}
