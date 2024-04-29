@@ -30,8 +30,9 @@ model Property {
   address          String
   price            Decimal @db.Decimal(10, 2)
   evaluation_price Decimal @db.Decimal(10, 2)
-  discont          Decimal @db.Decimal(10, 2)
+  discount         Decimal @db.Decimal(10, 2)
   description      String
   modality         String
   url              String
+  type             String
 }

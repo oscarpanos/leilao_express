@@ -1,84 +1,90 @@
-import fs from 'fs';
-import path from 'path';
-import csv from 'csv-parser';
-import iconv from 'iconv-lite';
-import prisma from '../prisma/db/db';
-import { Property as PrismaProperty } from '@prisma/client';
+import fs from "fs";
+import path from "path";
 
-interface Property extends Omit<PrismaProperty, 'id'> {
-    id?: PrismaProperty['id'];
-}
+import csv from "csv-parser";
+import iconv from "iconv-lite";
+import { Prisma } from "@prisma/client";
 
-let errorCount: number = 0
+import prisma from "../prisma/db/db";
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+let totalErrors = 0;
 
 async function processFile(file: string) {
-    let results: Property[] = [];
-    let dateNow: Date = new Date();
+  const results: Prisma.PropertyUncheckedCreateInput[] = [];
+  const state = file.split("_").at(-1)?.split(".")[0];
 
-    const expectedColumnCount: number = 11;
-    let headerCount: number = 0;
+  const expectedColumnCount: number = 11;
 
-    return new Promise((resolve, reject) => {
-        const stream = fs.createReadStream(file);
-        const decodeStream = iconv.decodeStream('iso-8859-1');
-        stream.pipe(decodeStream);
+  return new Promise((resolve, reject) => {
+    const start = performance.now();
+    const stream = fs.createReadStream(file, { autoClose: true });
+    const decodeStream = iconv.decodeStream("iso-8859-1");
+    stream.pipe(decodeStream);
 
-        let stateErrorCount: number = 0;
+    let errors: number = 0;
+    let rowCount: number = 0;
 
-        decodeStream
-            .pipe(csv({ separator: ';' }))
-            .on('data', async (row) => {
-                const rowArray = Object.values(row);
-                headerCount++;
+    decodeStream
+      .pipe(csv({ separator: ";" }))
+      .on("data", async (row) => {
+        rowCount++;
+        if (rowCount <= 4) return;
+        if (Object.values(row).length !== expectedColumnCount) {
+          //   console.error(`${state}: skipping row with incorrect format.`);
+          totalErrors++;
+          errors++;
+          return;
+        }
 
-                if (headerCount > 4 && rowArray.length === expectedColumnCount) {
-                    let property: Property = {
-                        origin_id: row["_0"].trim(),
-                        origin: "Caixa Econômica Federal",
-                        state: row["_1"],
-                        city: row["_2"],
-                        district: row["_3"],
-                        address: row["_4"],
-                        price: row["_5"].replaceAll(".", '').replace(",", "."),
-                        evaluation_price: row["_6"].replaceAll(".", '').replace(",", "."),
-                        discont: row["_7"],
-                        description: row["_8"],
-                        modality: row["_9"],
-                        url: row["_10"]
-                    }
-                    results.push(property);
-                } else {
-                    errorCount++;
-                    stateErrorCount++;
-                    console.error(`Skipping row with incorrect format.`);
-                }
-            })
-            .on('end', async () => {
-                let execTime: number = new Date().getTime() - dateNow.getTime();
+        results.push({
+          origin_id: row["_0"].trim(),
+          origin: "Caixa Econômica Federal",
+          state: row["_1"],
+          city: row["_2"],
+          district: row["_3"],
+          address: row["_4"],
+          price: row["_5"].replaceAll(".", "").replace(",", "."),
+          evaluation_price: row["_6"].replaceAll(".", "").replace(",", "."),
+          discount: row["_7"],
+          description: row["_8"],
+          type: row["_8"].split(",")[0],
+          modality: row["_9"],
+          url: row["_10"],
+        });
+      })
+      .on("end", async () => {
+        const elapsed = Math.round(performance.now() - start);
+        const errorPct = ((100 * errors) / rowCount).toFixed(2);
 
-                console.log(`Finished processing ${file.slice(24, 26)} with ${stateErrorCount} erros in ${execTime}ms.`)
-                console.error(`So far ${errorCount} lines were not inserted due to invalid CSV delimiter.`);
+        console.log(
+          [
+            `${state}: finished in ${elapsed}ms.`,
+            `\tEntries: ${rowCount}`,
+            `\tErrors: ${errors} - ${errorPct}%`,
+          ].join("\n")
+        );
+        await prisma.property.createMany({
+          data: results,
+          skipDuplicates: true,
+        });
 
-                await prisma.property.createMany({
-                    data: results
-                });
-
-                return resolve;
-            })
-            .on('error', reject);
-    });
+        return resolve;
+      })
+      .on("error", reject);
+  });
 }
 
-fs.readdir('./downloads', async (err, files) => {
-    if (err) {
-        console.error('Could not list the directory.', err);
-        process.exit(1);
-    }
+fs.readdir("./downloads", async (err, files) => {
+  if (err) {
+    console.error("Could not list the directory.", err);
+    process.exit(1);
+  }
 
-    const promises = files.map((file) => {
-        const filePath = path.join('./downloads', file);
-        return processFile(filePath);
-    });
+  const promises = files.map((file) => {
+    const filePath = path.join("./downloads", file);
+    return processFile(filePath);
+  });
 
-    await Promise.all(promises);
+  await Promise.all(promises);
 });
