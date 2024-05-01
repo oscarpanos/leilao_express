@@ -1,14 +1,14 @@
 import Navbar from "./components/Navbar";
 import PropertyList from "./components/PropertyList";
 
-export default async function Home() {
+export default function Home() {
   return (
     <>
       <header>
         <Navbar />
       </header>
       <main>
-        <section>
+        <section className="flex flex-col gap-4">
           <PropertyList />
         </section>
       </main>

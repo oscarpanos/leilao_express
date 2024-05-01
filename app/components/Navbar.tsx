@@ -4,8 +4,8 @@ import { signIn, signOut, useSession } from "next-auth/react";
 export default function Navbar() {
   const session = useSession();
   return (
-    <nav className="flex items-center justify-between px-4">
-      <h1 className="text-lg font-bold">Leilão Express</h1>
+    <nav className="flex items-center justify-between bg-slate-700 px-10 text-white">
+      <h1 className="text-xl  uppercase">Leilão Express</h1>
       <div>
         {session.data ? (
           <div className="p-2" onClick={() => signOut()}>

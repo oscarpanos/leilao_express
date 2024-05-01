@@ -21,13 +21,13 @@ const toCurrency = (value: string) => {
 };
 
 export default async function PropertyList() {
-  const properties = await prisma.property.findMany({
-    take: 10,
+  const allProperties = await prisma.property.findMany({
+    take: 50,
   });
 
   return (
     <div className="flex flex-wrap justify-center gap-4 border p-10">
-      {properties.map((p) => (
+      {allProperties.map((p) => (
         <Link
           className="min-w-[280px] max-w-[420px] grow"
           href={p.url}
@@ -39,7 +39,10 @@ export default async function PropertyList() {
               <CardTitle className="text-lg">
                 {p.city}/{p.state}
               </CardTitle>
-              <CardDescription>{p.description.split(",")[2]}</CardDescription>
+              <CardDescription className="text-sm">
+                {p.type}, bairro{" "}
+                <span className="font-semibold">{p.district}</span>
+              </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col items-center">
               <div className="relative h-48 w-full">
@@ -50,26 +53,46 @@ export default async function PropertyList() {
                   fill
                   style={{ objectFit: "cover" }}
                 />
-                <div className="absolute hidden h-full place-items-center bg-white/70 px-4 text-sm group-hover:grid">
+                <div className="absolute hidden h-full place-items-center bg-white/70 px-4 text-sm font-bold group-hover:grid">
                   {p.description}
                 </div>
               </div>
-              <div className="font-bold"></div>
-              <div className="flex justify-between gap-2">
+              <div className="mt-4 flex w-full justify-between gap-4">
                 <div className="flex flex-col items-center">
-                  <div>Preço</div>
-                  <div>{toCurrency(p.price.toString())}</div>
+                  <div className="w-full border-b text-center text-sm font-bold">
+                    Preço
+                  </div>
+                  <div className="font-semibold text-green-700">
+                    {toCurrency(p.price.toString())}
+                  </div>
                 </div>
                 <div className="flex flex-col items-center">
-                  <div>Avaliação</div>
-                  <div>{toCurrency(p.evaluation_price.toString())}</div>
+                  <div className="w-full border-b text-center text-sm font-bold">
+                    Avaliação
+                  </div>
+                  <div className="">
+                    {toCurrency(p.evaluation_price.toString())}
+                  </div>
                 </div>
                 <div className="flex flex-col items-center">
-                  <div>Desconto</div>
-                  <div>{p.discount.toString()}%</div>
+                  <div className="w-full border-b text-center text-sm font-bold">
+                    Desconto
+                  </div>
+                  <div>
+                    {p.discount.toString() < "1" ? (
+                      "-"
+                    ) : (
+                      <span className="font-bold text-red-500">
+                        {p.discount.toString() + "%"}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
             </CardContent>
+            <CardFooter className="flex w-full justify-center rounded-b border-t bg-slate-600 text-xs font-semibold text-white ">
+              {p.origin}
+            </CardFooter>
           </Card>
         </Link>
       ))}
