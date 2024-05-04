@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
+import { Property } from "@prisma/client";
 
-import prisma from "@/prisma/db/db";
 import {
   Card,
   CardContent,
@@ -11,23 +11,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { getPropertyImageURL } from "@/utils/cef";
+import { toCurrency } from "@/utils/functions";
 
-const toCurrency = (value: string) => {
-  const floatPrice = parseFloat(value);
-  return new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  }).format(floatPrice);
-};
+interface PropertyListProps {
+  properties: Property[];
+}
 
-export default async function PropertyList() {
-  const allProperties = await prisma.property.findMany({
-    take: 50,
-  });
-
+export default async function PropertyList({ properties }: PropertyListProps) {
   return (
     <div className="flex flex-wrap justify-center gap-4 border p-10">
-      {allProperties.map((p) => (
+      {properties.map((p) => (
         <Link
           className="min-w-[280px] max-w-[420px] grow"
           href={p.url}
@@ -90,8 +83,14 @@ export default async function PropertyList() {
                 </div>
               </div>
             </CardContent>
-            <CardFooter className="flex w-full justify-center rounded-b border-t bg-slate-600 text-xs font-semibold text-white ">
-              {p.origin}
+            <CardFooter
+              className={`flex w-full justify-center rounded-b border-t ${p.origin.includes("Caixa") ? "bg-[#005BA3]" : "bg-[#CC092F]"} text-xs font-semibold text-white`}
+            >
+              <span
+                className={`${p.origin.includes("Caixa") ? "text-[#F19E00]" : "text-white"}`}
+              >
+                <span className="font-bold">{p.modality}</span> - {p.origin}
+              </span>
             </CardFooter>
           </Card>
         </Link>
