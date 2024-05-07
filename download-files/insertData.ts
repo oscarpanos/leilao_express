@@ -40,17 +40,17 @@ async function processFile(file: string) {
         results.push({
           origin_id: row["_0"].trim(),
           origin: "Caixa Econômica Federal",
-          state: row["_1"].trim(),
-          city: row["_2"].trim(),
-          district: row["_3"].trim(),
-          address: row["_4"].trim(),
+          state: row["_1"],
+          city: row["_2"],
+          district: row["_3"],
+          address: row["_4"],
           price: row["_5"].replaceAll(".", "").replace(",", "."),
           evaluation_price: row["_6"].replaceAll(".", "").replace(",", "."),
           discount: row["_7"],
-          description: row["_8"].trim(),
-          type: row["_8"].split(",")[0].trim(),
-          modality: row["_9"].trim(),
-          url: row["_10"].trim(),
+          description: row["_8"],
+          type: row["_8"].split(",")[0],
+          modality: row["_9"],
+          url: row["_10"],
         });
       })
       .on("end", async () => {
