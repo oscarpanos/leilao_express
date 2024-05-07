@@ -14,6 +14,7 @@ module.exports = {
     },
   },
   rules: {
+    "import/no-named-as-default": 0,
     "@typescript-eslint/no-unused-vars": ["warn", { ignoreRestSiblings: true }],
     "import/order": [
       "error",

@@ -1,23 +1,23 @@
-import { Prisma } from "@prisma/client";
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { prisma } from "../../../../lib/prisma/client";
 import { compare } from "bcrypt";
 
-export const authOptions: NextAuthOptions = {
+import prisma from "@/prisma/db/db";
+
+const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
   providers: [
     CredentialsProvider({
-      name: "Sign in",
+      name: "Entrar",
       credentials: {
         email: {
           label: "Email",
           type: "email",
-          placeholder: "olá@exemplo.com",
+          placeholder: "email@exemplo.com",
         },
-        password: { label: "Password", type: "password" },
+        password: { label: "Senha", type: "password" },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials.password) return null;
@@ -40,7 +40,6 @@ export const authOptions: NextAuthOptions = {
           id: user.id + "",
           email: user.email,
           name: user.name,
-          randomKey: "Hey cool",
         };
       },
     }),

@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "download-cef": "ts-node download-files/byStateCEF.ts",
-    "cef": "ts-node download-files/insertData.ts"
+    "download-cef-files": "ts-node utils/CEF/download_cef_files.ts",
+    "push-cef-data": "ts-node utils/CEF/push_cef_data_to_db.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.10.2",

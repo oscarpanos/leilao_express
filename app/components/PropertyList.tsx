@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { getPropertyImageURL } from "@/utils/cef";
+import { getPropertyImageURL } from "@/utils/functions";
 
 const toCurrency = (value: string) => {
   const floatPrice = parseFloat(value);
