@@ -51,6 +51,7 @@ async function processFile(file: string) {
           type: row["_8"].split(",")[0].trim(),
           modality: row["_9"].trim(),
           url: row["_10"].trim(),
+          active: true,
         });
       })
       .on("end", async () => {
@@ -80,6 +81,15 @@ fs.readdir("./downloads", async (err, files) => {
     console.error("Could not list the directory.", err);
     process.exit(1);
   }
+
+  await prisma.property.updateMany({
+    where: {
+      origin: "Caixa Econômica Federal",
+    },
+    data: {
+      active: false,
+    },
+  });
 
   const promises = files.map((file) => {
     const filePath = path.join("./downloads", file);

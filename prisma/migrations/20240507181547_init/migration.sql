@@ -24,6 +24,7 @@ CREATE TABLE "Property" (
     "modality" TEXT NOT NULL,
     "url" TEXT NOT NULL,
     "type" TEXT NOT NULL,
+    "active" BOOLEAN NOT NULL,
 
     CONSTRAINT "Property_pkey" PRIMARY KEY ("id")
 );

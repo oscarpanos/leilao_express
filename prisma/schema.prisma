@@ -35,4 +35,5 @@ model Property {
   modality         String
   url              String
   type             String
+  active           Boolean
 }
