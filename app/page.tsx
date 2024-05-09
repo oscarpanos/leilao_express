@@ -43,16 +43,14 @@ export default async function Home({ searchParams }: HomeProps) {
   }
 
   return (
-    <>
-      <header>
-        <Navbar />
-      </header>
+    <div className="flex min-h-screen w-full flex-col">
+      <Navbar />
       <main className="p-8">
         <section className="flex flex-col items-center gap-4">
           <PropertyFilter />
           <PropertyList properties={properties} />
         </section>
       </main>
-    </>
+    </div>
   );
 }

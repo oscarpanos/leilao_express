@@ -60,7 +60,7 @@ export default function PropertyFilter() {
       .then((data) => {
         setModalities(data);
       });
-  }, [selectedCity]);
+  }, [selectedCity, selectedState]);
 
   function filter() {
     const updatedSearchParams = new URLSearchParams(searchParams);

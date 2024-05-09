@@ -1,10 +1,12 @@
+import { NextRequest, NextResponse } from "next/server";
+
 import prisma from "@/prisma/db/db";
 
 interface Params {
   params: { state: string };
 }
 
-export async function GET(res: Response, { params }: Params) {
+const GET = async (req: NextRequest, { params }: Params) => {
   const { state } = params;
   const cities = await prisma.property.findMany({
     select: { city: true },
@@ -18,5 +20,7 @@ export async function GET(res: Response, { params }: Params) {
     distinct: "city",
   });
 
-  return Response.json(cities);
-}
+  return NextResponse.json(cities);
+};
+
+export { GET };

@@ -9,6 +9,7 @@ import prisma from "../../prisma/db/db";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 let totalErrors = 0;
+const downloadPath = `./downloads/${new Date().toLocaleDateString().replaceAll("/", "-")}/`;
 
 async function processFile(file: string) {
   const results: Prisma.PropertyUncheckedCreateInput[] = [];
@@ -16,7 +17,7 @@ async function processFile(file: string) {
 
   const expectedColumnCount: number = 11;
 
-  return new Promise((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     const start = performance.now();
     const stream = fs.createReadStream(file, { autoClose: true });
     const decodeStream = iconv.decodeStream("iso-8859-1");
@@ -65,18 +66,32 @@ async function processFile(file: string) {
             `\tErrors: ${errors} - ${errorPct}%`,
           ].join("\n")
         );
+
+        const activeOriginIds = results.map((result) => result.origin_id);
+
         await prisma.property.createMany({
           data: results,
           skipDuplicates: true,
         });
 
-        return resolve;
+        await prisma.property.updateMany({
+          where: {
+            origin_id: {
+              in: activeOriginIds,
+            },
+          },
+          data: {
+            active: true,
+          },
+        });
+
+        return resolve();
       })
       .on("error", reject);
   });
 }
 
-fs.readdir("./downloads", async (err, files) => {
+fs.readdir(downloadPath, async (err, files) => {
   if (err) {
     console.error("Could not list the directory.", err);
     process.exit(1);
@@ -92,7 +107,7 @@ fs.readdir("./downloads", async (err, files) => {
   });
 
   const promises = files.map((file) => {
-    const filePath = path.join("./downloads", file);
+    const filePath = path.join(downloadPath, file);
     return processFile(filePath);
   });
 
