@@ -1,7 +1,23 @@
 "use client";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { type ChangeEvent } from "react";
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 
 interface State {
   state: string;
@@ -28,11 +44,6 @@ export default function PropertyFilter() {
   const [modalities, setModalities] = useState<Modality[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/modalities")
-      .then((res) => res.json())
-      .then((data) => {
-        setModalities(data);
-      });
     fetch("http://localhost:3000/api/states")
       .then((res) => res.json())
       .then((data) => {
@@ -60,7 +71,8 @@ export default function PropertyFilter() {
       .then((data) => {
         setModalities(data);
       });
-  }, [selectedCity, selectedState]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedCity]);
 
   function filter() {
     const updatedSearchParams = new URLSearchParams(searchParams);
@@ -77,84 +89,89 @@ export default function PropertyFilter() {
     if (selectedModality && selectedModality !== "all") {
       updatedSearchParams.set("modality", selectedModality);
     }
-    if (selectedOrderBy && selectedOrderBy !== "order") {
+    if (selectedOrderBy) {
       updatedSearchParams.set("orderBy", selectedOrderBy);
     }
+    console.log(updatedSearchParams);
     router.push(`${pathname}?${updatedSearchParams.toString()}`);
   }
 
-  const handleChange = async (event: ChangeEvent<HTMLSelectElement>) => {
-    const eventName = event.target.name;
-    const eventValue = event.target.value;
-    eventName === "state"
-      ? setSelectedState(eventValue)
-      : eventName === "city"
-        ? setSelectedCity(eventValue)
-        : eventName === "modality"
-          ? setSelectedModality(eventValue)
-          : eventName === "orderBy"
-            ? setSelectedOrderBy(eventValue)
-            : null;
+  const handleStateChange = (value: string) => {
+    setSelectedState(value);
+  };
+  const handleCityChange = (value: string) => {
+    setSelectedCity(value);
+  };
+  const handleModalityChange = (value: string) => {
+    setSelectedModality(value);
+  };
+  const handleOrderByChange = (value: string) => {
+    setSelectedOrderBy(value);
   };
 
   return (
-    <div className="mt-4 flex gap-4 rounded bg-orange-400 p-2">
-      <select
-        className="rounded border bg-slate-100"
-        name="state"
-        onChange={handleChange}
-      >
-        <option value="all">Todos os estados</option>
-        {states.map(({ state }, i) => (
-          <option key={i} value={state}>
-            {state}
-          </option>
-        ))}
-      </select>
-      {selectedState && (
-        <select
-          className="rounded border bg-slate-100"
-          name="city"
-          onChange={handleChange}
-        >
-          <option value="all">Todas as cidades</option>
-          {cities.map(({ city }, i) => (
-            <option key={i} value={city}>
-              {city}
-            </option>
-          ))}
-        </select>
-      )}
-
-      <select
-        className="rounded border bg-slate-100"
-        name="modality"
-        onChange={handleChange}
-      >
-        <option value="all">Todas as modalidades</option>
-        {modalities.map(({ modality }, i) => (
-          <option key={i} value={modality}>
-            {modality}
-          </option>
-        ))}
-      </select>
-
-      <select
-        className="rounded border bg-slate-100"
-        name="orderBy"
-        onChange={handleChange}
-      >
-        <option value="order">Ordenar por</option>
-        <option value="desc">Maior preço</option>
-        <option value="asc">Menor preço</option>
-      </select>
-
-      <div
-        className=" cursor-pointer rounded bg-slate-700 px-2 py-1 font-bold text-white transition-all hover:bg-slate-900"
-        onClick={filter}
-      >
+    <Sheet>
+      <SheetTrigger className="float-left ml-auto rounded bg-slate-900 px-4 py-2 text-white">
         Filtrar
-      </div>
-    </div>
+      </SheetTrigger>
+      <SheetContent className="flex flex-col gap-4">
+        <SheetHeader>
+          <SheetTitle>Filtros</SheetTitle>
+          <SheetDescription>
+            Selecionando filtros, você irá direcionar sua busca com melhores
+            parâmetros.
+          </SheetDescription>
+        </SheetHeader>
+        <Select name="state" onValueChange={handleStateChange}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Estados" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Todos os estados</SelectItem>
+            {states.map(({ state }, i) => (
+              <SelectItem key={i} value={state}>
+                {state}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Select name="city" onValueChange={handleCityChange}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Cidades" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Todos as cidades</SelectItem>
+            {cities.map(({ city }, i) => (
+              <SelectItem key={i} value={city}>
+                {city}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Select name="modality" onValueChange={handleModalityChange}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Modalidades" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Todas as modalidades</SelectItem>
+            {modalities.map(({ modality }, i) => (
+              <SelectItem key={i} value={modality}>
+                {modality}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Select name="orderBy" onValueChange={handleOrderByChange}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Ordenar por valor" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="desc">Maior preço</SelectItem>
+            <SelectItem value="asc">Menor preço</SelectItem>
+          </SelectContent>
+        </Select>
+        <Button onClick={filter}>Aplicar filtros</Button>
+      </SheetContent>
+    </Sheet>
   );
 }

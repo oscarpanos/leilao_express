@@ -15,6 +15,7 @@ const GET = async (req: NextRequest, { params }: Params) => {
         mode: "insensitive",
         equals: city,
       },
+      active: true,
     },
     orderBy: { modality: "asc" },
     distinct: "modality",

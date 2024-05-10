@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/card";
 import { toCurrency, getPropertyImageURL } from "@/utils/functions";
 
+import PropertyFilter from "./PropertyFilter";
+
 interface PropertyListProps {
   properties: Property[];
 }
@@ -19,8 +21,11 @@ interface PropertyListProps {
 export default async function PropertyList({ properties }: PropertyListProps) {
   return (
     <div className="flex flex-col items-center justify-center gap-4">
-      <h1 className="w-full text-left text-3xl">Imóveis</h1>
-      <div className="flex flex-wrap justify-center gap-4 rounded border p-4">
+      <div className="flex w-full items-center justify-between">
+        <h1 className="text-2xl">Imóveis</h1>
+        <PropertyFilter />
+      </div>
+      <div className="flex flex-wrap justify-center gap-4 rounded-md border-slate-600 bg-slate-100 p-4 shadow-lg">
         {properties.map((p) => (
           <Link
             className="min-w-[280px] max-w-[420px] grow"
@@ -85,7 +90,7 @@ export default async function PropertyList({ properties }: PropertyListProps) {
                 </div>
               </CardContent>
               <CardFooter
-                className={`flex w-full justify-center rounded-b border-t ${p.origin.includes("Caixa") ? "bg-[#005BA3]" : "bg-[#CC092F]"} text-xs font-semibold text-white`}
+                className={`flex w-full justify-center rounded-b border-t ${p.origin.includes("Caixa") ? "bg-slate-900" : "bg-[#CC092F]"} text-xs font-semibold text-white`}
               >
                 <span
                   className={`${p.origin.includes("Caixa") ? "text-[#F19E00]" : "text-white"}`}

@@ -18,7 +18,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 export default function Navbar() {
   const session = useSession();
   return (
-    <header className="sticky top-0 flex h-16 w-full items-center justify-between gap-4 border-b bg-background px-4 md:px-6">
+    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between gap-4 border-b bg-background px-4 md:px-6">
       <nav className="hidden w-full flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:justify-between md:gap-5 md:text-sm lg:gap-6">
         <div>
           <Link
@@ -72,10 +72,10 @@ export default function Navbar() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            {session.data && <DropdownMenuLabel>My Account</DropdownMenuLabel>}
+            {session.data && <DropdownMenuLabel>Minha conta</DropdownMenuLabel>}
             {session.data && <DropdownMenuSeparator />}
-            {session.data && <DropdownMenuItem>Settings</DropdownMenuItem>}
-            {session.data && <DropdownMenuItem>Support</DropdownMenuItem>}
+            {session.data && <DropdownMenuItem>Configurações</DropdownMenuItem>}
+            {session.data && <DropdownMenuItem>Suporte</DropdownMenuItem>}
             {session.data && <DropdownMenuSeparator />}
             <DropdownMenuItem>
               {session.data ? (
