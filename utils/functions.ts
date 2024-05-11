@@ -10,3 +10,10 @@ export function toCurrency(price: string) {
     currency: "BRL",
   }).format(parseFloat(price));
 }
+
+interface ImageSrc {
+  src: string;
+}
+export const loaderProp = ({ src }: ImageSrc) => {
+  return src;
+};

@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { toCurrency, getPropertyImageURL } from "@/utils/functions";
+import { toCurrency, getPropertyImageURL, loaderProp } from "@/utils/functions";
 
 import PropertyFilter from "./PropertyFilter";
 
@@ -51,6 +51,7 @@ export default async function PropertyList({ properties }: PropertyListProps) {
                     sizes="320px"
                     fill
                     style={{ objectFit: "cover" }}
+                    loader={loaderProp}
                   />
                   <div className="absolute hidden h-full place-items-center bg-white/70 px-4 text-sm font-bold group-hover:grid">
                     {p.description}
