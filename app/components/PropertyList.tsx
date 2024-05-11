@@ -21,7 +21,7 @@ interface PropertyListProps {
 export default async function PropertyList({ properties }: PropertyListProps) {
   return (
     <div className="flex flex-col items-center justify-center gap-4">
-      <div className="flex w-full items-center justify-between">
+      <div className="flex w-full items-center justify-between p-2 md:p-0">
         <h1 className="text-2xl">Imóveis</h1>
         <PropertyFilter />
       </div>

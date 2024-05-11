@@ -37,7 +37,7 @@ const authOptions: NextAuthOptions = {
         if (!isPasswordValid) return null;
 
         return {
-          id: user.id + "",
+          id: user.id,
           email: user.email,
           name: user.name,
         };
