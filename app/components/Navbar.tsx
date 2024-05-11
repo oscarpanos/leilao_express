@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { CircleUser, Menu, Gavel } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 
+import Logo from "@/public/logo.svg";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -19,27 +21,17 @@ export default function Navbar() {
   const session = useSession();
   return (
     <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between gap-4 border-b bg-background px-4 md:px-6">
-      <nav className="hidden w-full flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:justify-between md:gap-5 md:text-sm lg:gap-6">
+      <nav className="w-full flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:justify-between md:gap-5 md:text-sm lg:gap-6">
         <div>
           <Link
             href="/"
             className="flex items-center gap-2 text-lg font-semibold md:text-base"
           >
-            <Gavel className="size-6" />
-            <h1 className="text-lg uppercase">Leilão Express</h1>
-            <span className="sr-only">Leilão Express</span>
+            <Image src={Logo} width={50} height={50} alt="logo" />
+            <span className="uppercase">Leilões</span>
+            <span className="sr-only">Chama Leilões</span>
           </Link>
         </div>
-        {session.data && (
-          <div className="flex justify-around gap-4">
-            <Link
-              href="#"
-              className="text-foreground transition-colors hover:text-foreground"
-            >
-              Dashboard
-            </Link>
-          </div>
-        )}
       </nav>
       <Sheet>
         <SheetTrigger asChild>
@@ -55,7 +47,7 @@ export default function Navbar() {
               className="flex items-center gap-2 text-lg font-semibold"
             >
               <Gavel className="size-6" />
-              <span className="sr-only">Leilão Express</span>
+              <span className="sr-only">Chama Leilões</span>
             </Link>
             <Link href="#" className="hover:text-foreground">
               Dashboard
@@ -72,22 +64,38 @@ export default function Navbar() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            {session.data && <DropdownMenuLabel>Minha conta</DropdownMenuLabel>}
+            {session.data && (
+              <Link href="/conta">
+                <DropdownMenuLabel>Meu painel</DropdownMenuLabel>
+              </Link>
+            )}
             {session.data && <DropdownMenuSeparator />}
-            {session.data && <DropdownMenuItem>Configurações</DropdownMenuItem>}
-            {session.data && <DropdownMenuItem>Suporte</DropdownMenuItem>}
+            {session.data && (
+              <Link href="/config">
+                <DropdownMenuItem>Configurações</DropdownMenuItem>
+              </Link>
+            )}
+            {session.data && (
+              <Link href="suporte">
+                <DropdownMenuItem>Suporte</DropdownMenuItem>
+              </Link>
+            )}
             {session.data && <DropdownMenuSeparator />}
-            <DropdownMenuItem>
-              {session.data ? (
-                <div className="p-2" onClick={() => signOut()}>
-                  Sair
-                </div>
-              ) : (
-                <div className="p-2" onClick={() => signIn()}>
-                  Logar
-                </div>
-              )}
-            </DropdownMenuItem>
+            {session.data ? (
+              <DropdownMenuItem
+                className="cursor-pointer p-2"
+                onClick={() => signOut()}
+              >
+                Sair
+              </DropdownMenuItem>
+            ) : (
+              <DropdownMenuItem
+                className="cursor-pointer p-2"
+                onClick={() => signIn()}
+              >
+                Logar
+              </DropdownMenuItem>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

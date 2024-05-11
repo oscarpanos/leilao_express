@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetDescription,
   SheetHeader,
@@ -168,7 +169,9 @@ export default function PropertyFilter() {
             <SelectItem value="asc">Menor preço</SelectItem>
           </SelectContent>
         </Select>
-        <Button onClick={filter}>Aplicar filtros</Button>
+        <SheetClose asChild>
+          <Button onClick={filter}>Aplicar filtros</Button>
+        </SheetClose>
       </SheetContent>
     </Sheet>
   );

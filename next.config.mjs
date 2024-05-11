@@ -4,9 +4,9 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "venda-imoveis.caixa.gov.br",
+        hostname: "**",
         port: "",
-        pathname: "**/*",
+        pathname: "**",
       },
     ],
   },

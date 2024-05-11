@@ -21,11 +21,11 @@ interface PropertyListProps {
 export default async function PropertyList({ properties }: PropertyListProps) {
   return (
     <div className="flex flex-col items-center justify-center gap-4">
-      <div className="flex w-full items-center justify-between p-2 md:p-0">
-        <h1 className="text-2xl">Imóveis</h1>
-        <PropertyFilter />
-      </div>
       <div className="flex flex-wrap justify-center gap-4 rounded-md border-slate-600 bg-slate-100 p-4 shadow-lg">
+        <div className="flex w-full items-center justify-between md:p-0">
+          <h1 className="text-2xl">Lista de imóveis</h1>
+          <PropertyFilter />
+        </div>
         {properties.map((p) => (
           <Link
             className="min-w-[280px] max-w-[420px] grow"
@@ -46,7 +46,7 @@ export default async function PropertyList({ properties }: PropertyListProps) {
               <CardContent className="flex flex-col items-center">
                 <div className="relative h-48 w-full">
                   <Image
-                    alt={p.type}
+                    alt={`${p.type} no ${p.district}`}
                     src={getPropertyImageURL(p)}
                     sizes="320px"
                     fill
