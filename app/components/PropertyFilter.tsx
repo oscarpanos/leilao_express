@@ -44,7 +44,7 @@ export default function PropertyFilter() {
   const [modalities, setModalities] = useState<Modality[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/states")
+    fetch("api/states")
       .then((res) => res.json())
       .then((data) => {
         setStates(data);
@@ -54,7 +54,7 @@ export default function PropertyFilter() {
   useEffect(() => {
     setCities([]);
     setSelectedCity("");
-    fetch(`http://localhost:3000/api/${selectedState}/cities`)
+    fetch(`api/${selectedState}/cities`)
       .then((res) => res.json())
       .then((data) => {
         setCities(data);
@@ -64,9 +64,7 @@ export default function PropertyFilter() {
   useEffect(() => {
     setModalities([]);
     setSelectedModality("");
-    fetch(
-      `http://localhost:3000/api/${selectedState}/${selectedCity}/modalities`
-    )
+    fetch(`api/${selectedState}/${selectedCity}/modalities`)
       .then((res) => res.json())
       .then((data) => {
         setModalities(data);
