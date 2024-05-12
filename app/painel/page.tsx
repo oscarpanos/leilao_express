@@ -25,13 +25,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import prisma from "@/prisma/db/db";
 import { toCurrency } from "@/utils/functions";
 
 import Navbar from "../components/Navbar";
 
 export default async function Dashboard() {
-  const req = await fetch("http://localhost:3000/api/info");
+  const req = await fetch(`${process.env.NEXTAUTH_URL}/api/info`);
   const data = await req.json();
   return (
     <div className="flex min-h-screen w-full flex-col">
