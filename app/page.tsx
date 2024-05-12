@@ -2,7 +2,6 @@ import prisma from "@/prisma/db/db";
 
 import Navbar from "./components/Navbar";
 import PropertyList from "./components/PropertyList";
-import PropertyFilter from "./components/PropertyFilter";
 
 interface HomeProps {
   searchParams: {
@@ -43,13 +42,13 @@ export default async function Home({ searchParams }: HomeProps) {
   }
 
   return (
-    <div className="flex min-h-screen w-full flex-col">
+    <>
       <Navbar />
       <main className="p-8">
         <section className="flex flex-col items-center gap-4 ">
           <PropertyList properties={properties} />
         </section>
       </main>
-    </div>
+    </>
   );
 }

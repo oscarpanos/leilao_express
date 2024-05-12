@@ -26,7 +26,7 @@ export default function RootLayout({
       <Providers>
         <body
           className={cn(
-            "min-h-screen bg-background font-sans antialiased",
+            "min-h-screen bg-background font-sans antialiased flex w-full flex-col items-center ",
             fontSans.variable
           )}
         >

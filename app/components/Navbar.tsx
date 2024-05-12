@@ -65,7 +65,7 @@ export default function Navbar() {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             {session.data && (
-              <Link href="/conta">
+              <Link href="/painel">
                 <DropdownMenuLabel>Meu painel</DropdownMenuLabel>
               </Link>
             )}

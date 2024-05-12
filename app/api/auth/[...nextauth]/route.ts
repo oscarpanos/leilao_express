@@ -8,6 +8,9 @@ const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
+  pages: {
+    signIn: "/login",
+  },
   providers: [
     CredentialsProvider({
       name: "Entrar",
@@ -62,6 +65,9 @@ const authOptions: NextAuthOptions = {
         };
       }
       return token;
+    },
+    async redirect({ url, baseUrl }) {
+      return baseUrl;
     },
   },
 };
