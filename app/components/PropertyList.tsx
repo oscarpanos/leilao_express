@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { toCurrency, getPropertyImageURL } from "@/utils/functions";
+import { toCurrency, getPropertyImageURL } from "@/utils/auxFunctions";
 
 import PropertyFilter from "./PropertyFilter";
 

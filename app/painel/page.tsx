@@ -25,13 +25,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { toCurrency } from "@/utils/functions";
+import { getPropertiesInfo, toCurrency } from "@/utils/auxFunctions";
 
 import Navbar from "../components/Navbar";
 
 export default async function Dashboard() {
-  const req = await fetch(`${process.env.NEXTAUTH_URL}/api/info`);
-  const data = await req.json();
+  const data = await getPropertiesInfo();
   return (
     <div className="flex min-h-screen w-full flex-col">
       <Navbar />
