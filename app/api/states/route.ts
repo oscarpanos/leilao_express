@@ -1,10 +1,15 @@
+import { NextResponse } from "next/server";
+
 import prisma from "@/prisma/db/db";
 
-export async function GET() {
+const GET = async () => {
   const states = await prisma.property.findMany({
     select: { state: true },
     distinct: "state",
     orderBy: { state: "asc" },
   });
-  return Response.json(states);
-}
+
+  return NextResponse.json(states);
+};
+
+export { GET };

@@ -1,6 +1,8 @@
+import { NextResponse } from "next/server";
+
 import prisma from "@/prisma/db/db";
 
-export async function GET() {
+const GET = async () => {
   const actives = await prisma.property.aggregate({
     where: {
       active: true,
@@ -35,11 +37,13 @@ export async function GET() {
     _count: true,
   });
   console.log(distinctCitiesCount.length);
-  return Response.json({
+  return NextResponse.json({
     numberOfActives: actives._count.id,
     numberOfProperties: totalProperties._count.id,
     priceSum: totalPrice._sum.price,
     numberOfPropertiesSold: sold._count.id,
     distinctCitiesAmount: distinctCitiesCount.length,
   });
-}
+};
+
+export { GET };
