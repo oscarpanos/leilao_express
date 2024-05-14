@@ -21,6 +21,6 @@ export function toCurrency(price: string) {
 }
 
 export async function getPropertiesInfo() {
-  const req: Response = await fetch(`${process.env.NEXTAUTH_URL}/api/info`);
+  const req = await fetch(`${process.env.NEXTAUTH_URL}/api/info`);
   if (req.ok) return req.json();
 }

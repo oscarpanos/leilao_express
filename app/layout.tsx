@@ -1,5 +1,8 @@
 import { Inter as FontSans } from "next/font/google";
 
+// eslint-disable-next-line import/order
+import { Toaster } from "@/components/ui/toaster";
+
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
@@ -31,6 +34,7 @@ export default function RootLayout({
           )}
         >
           {children}
+          <Toaster />
         </body>
       </Providers>
     </html>

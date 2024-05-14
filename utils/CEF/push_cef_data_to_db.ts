@@ -92,6 +92,7 @@ async function processFile(file: string) {
 }
 
 fs.readdir(downloadPath, async (err, files) => {
+  console.log(downloadPath);
   if (err) {
     console.error("Could not list the directory.", err);
     process.exit(1);

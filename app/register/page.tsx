@@ -1,35 +1,26 @@
-"use client";
-import { useRouter } from "next/navigation";
-import { FormEvent } from "react";
+import Link from "next/link";
 
-export default function LoginPage() {
-  const router = useRouter();
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+import RegisterForm from "../components/RegisterForm";
+import Navbar from "../components/Navbar";
 
-    const formData = new FormData(event.currentTarget);
-    const email = formData.get("email");
-    const password = formData.get("password");
-
-    const response = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-
-    if (response.ok) {
-      router.push("/profile");
-    } else {
-      // Handle errors
-    }
-  }
-
+export default function Register() {
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="email" name="email" placeholder="Email" required />
-      <input type="password" name="password" placeholder="Password" required />
-      <button type="submit">Login</button>
-    </form>
+    <main className="flex min-h-screen w-screen flex-col gap-24">
+      <Navbar />
+      <div className="p-4">
+        <RegisterForm />
+      </div>
+    </main>
   );
 }

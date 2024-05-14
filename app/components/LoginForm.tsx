@@ -16,6 +16,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
 
 interface Inputs {
   email: string;
@@ -23,6 +24,8 @@ interface Inputs {
 }
 
 export default function LoginForm() {
+  const { toast } = useToast();
+
   const formSchema = z.object({
     email: z.string().trim().email(),
     password: z.string(),
@@ -70,7 +73,7 @@ export default function LoginForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="email@provedor.com" {...field} />
+                <Input placeholder="email@provedor.com" {...field} required />
               </FormControl>
               <FormDescription>Insira seu email</FormDescription>
               <FormMessage />
@@ -84,14 +87,31 @@ export default function LoginForm() {
             <FormItem>
               <FormLabel>Senha</FormLabel>
               <FormControl>
-                <Input placeholder="Senha" {...field} type="password" />
+                <Input
+                  placeholder="Senha"
+                  {...field}
+                  type="password"
+                  required
+                />
               </FormControl>
               <FormDescription>Insira sua senha</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">Entrar</Button>
+        <Button
+          type="submit"
+          variant={"outline"}
+          className="w-full"
+          onClick={() => {
+            toast({
+              title: "Logado",
+              variant: "default",
+            });
+          }}
+        >
+          Entrar
+        </Button>
       </form>
     </Form>
   );

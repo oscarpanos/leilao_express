@@ -32,11 +32,10 @@ const GET = async () => {
       price: true,
     },
   });
-  const distinctCitiesCount = await prisma.property.groupBy({
-    by: ["city"],
-    _count: true,
+  const distinctCitiesCount = await prisma.property.findMany({
+    select: { city: true },
+    distinct: ["city"],
   });
-  console.log(distinctCitiesCount.length);
   return NextResponse.json({
     numberOfActives: actives._count.id,
     numberOfProperties: totalProperties._count.id,

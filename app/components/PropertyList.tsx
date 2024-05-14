@@ -10,6 +10,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 import { toCurrency, getPropertyImageURL } from "@/utils/auxFunctions";
 
 import PropertyFilter from "./PropertyFilter";
@@ -23,7 +32,9 @@ export default async function PropertyList({ properties }: PropertyListProps) {
     <div className="flex flex-col items-center justify-center gap-4">
       <div className="flex flex-wrap justify-center gap-4 rounded-md border-slate-600 bg-slate-100 p-4 shadow-lg">
         <div className="flex w-full items-center justify-between md:p-0">
-          <h1 className="text-2xl">Lista de imóveis</h1>
+          <h1 className="text-2xl">
+            Imóveis - {properties.length} encontrados
+          </h1>
           <PropertyFilter />
         </div>
         {properties.map((p) => (
@@ -49,6 +60,7 @@ export default async function PropertyList({ properties }: PropertyListProps) {
                     alt={`${p.type} no ${p.district}`}
                     src={getPropertyImageURL(p)}
                     sizes="320px"
+                    unoptimized
                     fill
                     style={{ objectFit: "cover" }}
                   />
@@ -102,6 +114,22 @@ export default async function PropertyList({ properties }: PropertyListProps) {
           </Link>
         ))}
       </div>
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious href="#" />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink href="#">1</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext href="#" />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
     </div>
   );
 }
