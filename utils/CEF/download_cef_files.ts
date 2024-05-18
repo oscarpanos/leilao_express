@@ -2,12 +2,11 @@ import path from "path";
 
 import { launch } from "puppeteer";
 
-const WAIT_TIME_MS = 100;
+const WAIT_TIME_MS = 2000;
+const CURRENT_DATE = new Date().toLocaleDateString().replaceAll("/", "-");
 
 const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
-const downloadPath = path.resolve(
-  `./downloads/${new Date().toLocaleDateString().replaceAll("/", "-")}`
-);
+const downloadPath = path.resolve(`./downloads/${CURRENT_DATE}`);
 const DROPDOWN_SELECTOR = "#cmb_estado";
 
 async function downloadFiles() {

@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { NextResponse } from "next/server";
 
 import prisma from "@/prisma/db/db";
@@ -41,7 +42,7 @@ const GET = async () => {
     numberOfProperties: totalProperties._count.id,
     priceSum: totalPrice._sum.price,
     numberOfPropertiesSold: sold._count.id,
-    distinctCitiesAmount: distinctCitiesCount.length,
+    numberOfCities: distinctCitiesCount.length,
   });
 };
 

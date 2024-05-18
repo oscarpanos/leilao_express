@@ -113,12 +113,11 @@ export default function PropertyFilter() {
       <SheetTrigger className="float-left ml-auto rounded bg-slate-900 px-4 py-2 text-white">
         Filtrar
       </SheetTrigger>
-      <SheetContent className="flex flex-col gap-4">
+      <SheetContent className="mr-10 flex flex-col gap-4 p-12 md:mr-0">
         <SheetHeader>
           <SheetTitle>Filtros</SheetTitle>
           <SheetDescription>
-            Selecionando filtros, você irá direcionar sua busca com melhores
-            parâmetros.
+            Selecionando filtros, você irá direcionar a sua busca.
           </SheetDescription>
         </SheetHeader>
         <Select name="state" onValueChange={handleStateChange}>

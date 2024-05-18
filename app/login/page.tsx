@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import LoginImage from "@/public/imgs/login.jpg";
+
 import LoginForm from "../components/LoginForm";
 import Navbar from "../components/Navbar";
 
@@ -28,11 +30,11 @@ export default function Login() {
         </div>
         <div className="hidden bg-muted lg:block">
           <Image
-            src="https://images.unsplash.com/photo-1496368077930-c1e31b4e5b44"
+            src={LoginImage}
             alt="Image"
             width="1920"
-            height="1080"
-            className="object-cover dark:brightness-[0.2] dark:grayscale"
+            height="00"
+            className="dark:brightness-[0.2] dark:grayscale"
           />
         </div>
       </div>

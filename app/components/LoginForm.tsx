@@ -1,9 +1,9 @@
 "use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -18,12 +18,15 @@ import {
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 
+import type { SignInResponse } from "next-auth/react";
+
 interface Inputs {
   email: string;
   password: string;
 }
 
 export default function LoginForm() {
+  const router = useRouter();
   const { toast } = useToast();
 
   const formSchema = z.object({
@@ -56,11 +59,24 @@ export default function LoginForm() {
       formData.append(`${String(field)}`, `${data[field]}`);
     }
 
-    signIn("credentials", {
+    const { ok, error } = (await signIn("credentials", {
       email: formData.get("email"),
       password: formData.get("password"),
-      redirect: true,
-    });
+      redirect: false,
+    })) as unknown as SignInResponse;
+    console.log(error);
+    if (ok) {
+      toast({
+        title: "Logado",
+      });
+      router.push("/painel");
+    } else {
+      toast({
+        title: "Login inválido",
+        description: "Tente novamente",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -99,17 +115,7 @@ export default function LoginForm() {
             </FormItem>
           )}
         />
-        <Button
-          type="submit"
-          variant={"outline"}
-          className="w-full"
-          onClick={() => {
-            toast({
-              title: "Logado",
-              variant: "default",
-            });
-          }}
-        >
+        <Button type="submit" variant={"outline"} className="w-full">
           Entrar
         </Button>
       </form>
