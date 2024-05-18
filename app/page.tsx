@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import Navbar from "./components/Navbar";
 
 export default async function HomePage() {
-  const data = await getPropertiesInfo();
+  const { numberOfActives, numberOfPropertiesSold } = await getPropertiesInfo();
   return (
     <>
       <Navbar />
@@ -218,7 +218,7 @@ export default async function HomePage() {
                       </CardHeader>
                       <CardContent className="flex flex-col gap-2">
                         <span className="font-semibold">
-                          {data.numberOfActives.toLocaleString()}
+                          {numberOfActives.toLocaleString()}
                         </span>
                         <span className="text-sm text-gray-500">
                           para você procurar o seu.
@@ -231,7 +231,7 @@ export default async function HomePage() {
                       </CardHeader>
                       <CardContent className="flex flex-col gap-2">
                         <span className="font-semibold">
-                          {data.numberOfPropertiesSold.toLocaleString()}
+                          {numberOfPropertiesSold.toLocaleString()}
                         </span>
                         <span className="text-sm text-gray-500">
                           desde o início da plataforma.
