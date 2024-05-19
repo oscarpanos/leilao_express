@@ -126,6 +126,7 @@ export default async function HomePage() {
                             className="mr-1 inline-block size-7 rounded-full border border-primary object-cover sm:mr-2"
                             height={50}
                             width={50}
+                            unoptimized
                           />
                           <p className="font-serif text-sm font-semibold sm:text-base">
                             Simas Turbo{" "}
@@ -182,6 +183,7 @@ export default async function HomePage() {
                   alt="Chama Leilões"
                   height={1000}
                   width={1000}
+                  unoptimized
                 />
               </div>
             </div>
@@ -251,6 +253,7 @@ export default async function HomePage() {
                     alt="Gather data from multiple auctions"
                     height={1000}
                     width={1000}
+                    unoptimized
                   />
                 </div>
               </div>
@@ -289,6 +292,7 @@ export default async function HomePage() {
                     alt="User-friendly experience"
                     height={1000}
                     width={1000}
+                    unoptimized
                   />
                 </div>
               </div>
@@ -317,6 +321,7 @@ export default async function HomePage() {
                     alt="Save time and effort"
                     height={1000}
                     width={1000}
+                    unoptimized
                   />
                 </div>
               </div>
