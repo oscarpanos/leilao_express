@@ -113,13 +113,13 @@ export default async function HomePage() {
                     </div>
                   </div>
                   <div className=" relative mt-6">
-                    <div className="flex items-center justify-center md:justify-start">
+                    <div className="flex items-center justify-start">
                       <div>
                         <p className="xs:text-center text-balance font-serif text-sm tracking-tight sm:text-base sm:font-bold md:text-left">
                           “Simplificou muito as minhas buscas de imóveis de
                           leilão.”{" "}
                         </p>
-                        <div className="mt-2 flex items-center justify-center gap-2 md:justify-start">
+                        <div className="mt-2 flex items-center justify-start gap-2">
                           <Image
                             src="https://storage.googleapis.com/mixo-files/public/img/avatars/male-30.png"
                             alt="Yan Lee"
@@ -129,7 +129,7 @@ export default async function HomePage() {
                             unoptimized
                           />
                           <p className="font-serif text-sm font-semibold sm:text-base">
-                            Simas Turbo{" "}
+                            Lucas Claro{" "}
                           </p>
                         </div>
                       </div>

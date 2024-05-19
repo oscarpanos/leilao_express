@@ -1,20 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { CircleUser, Menu, Gavel } from "lucide-react";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { Menu, Gavel } from "lucide-react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 
 import Logo from "@/public/logo.svg";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { toast } from "@/components/ui/use-toast";
 
