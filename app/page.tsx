@@ -8,7 +8,8 @@ import { Button } from "@/components/ui/button";
 import Navbar from "./components/Navbar";
 
 export default async function HomePage() {
-  const { numberOfActives, numberOfPropertiesSold } = await getPropertiesInfo();
+  const { numberOfActives = null, numberOfPropertiesSold = null } =
+    await getPropertiesInfo();
   return (
     <>
       <Navbar />
