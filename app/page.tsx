@@ -31,7 +31,7 @@ export default async function HomePage() {
                         A maneira mais inteligente de comprar imóveis.
                       </span>
                     </div>
-                    <h2 className="prose  relative mr-auto mt-6 text-balance font-serif sm:text-xl">
+                    <h2 className="prose relative mr-auto mt-6 text-balance font-serif sm:text-xl">
                       Descubra ofertas imobiliárias incríveis no Brasil através
                       de nossa plataforma fácil de usar.
                     </h2>
@@ -115,7 +115,7 @@ export default async function HomePage() {
                   <div className=" relative mt-6">
                     <div className="flex items-center justify-center md:justify-start">
                       <div>
-                        <p className="text-balance font-serif text-sm tracking-tight dark:font-bold sm:text-base sm:font-bold">
+                        <p className="xs:text-center text-balance font-serif text-sm tracking-tight sm:text-base sm:font-bold md:text-left">
                           “Simplificou muito as minhas buscas de imóveis de
                           leilão.”{" "}
                         </p>
@@ -316,7 +316,7 @@ export default async function HomePage() {
               <div className=" relative mt-12 sm:mt-16 lg:col-start-1 lg:mt-0">
                 <div className="-sm:ml-48 pr-4 sm:pr-6 md:-ml-16 lg:relative lg:m-0 lg:flex lg:h-full lg:items-center lg:px-0">
                   <Image
-                    src="https://images.unsplash.com/photo-1472224371017-08207f84aaae?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3wzMzczODV8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MTYwNDAwMzR8&amp;ixlib=rb-4.0.3&amp;q=80&amp;w=1080"
+                    src="https://images.unsplash.com/photo-1501139083538-0139583c060f?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     className="3xl:max-w-3xl ml-auto max-h-screen w-full rounded-r-2xl object-contain lg:right-0 2xl:max-h-[44rem] 2xl:max-w-2xl 2xl:rounded-2xl"
                     alt="Save time and effort"
                     height={1000}
@@ -406,7 +406,7 @@ export default async function HomePage() {
             </a>
           </div>
           <p className="text-xs leading-5 sm:text-center">
-            CHAMA © Todos os direitos reservados.
+            CHAMA © {new Date().getFullYear()}
           </p>
         </div>
       </footer>

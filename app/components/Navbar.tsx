@@ -57,8 +57,8 @@ export default function Navbar() {
               <Gavel className="size-6" />
               <span className="sr-only">Chama Leilões</span>
             </Link>
-            <Link href="#" className="hover:text-foreground">
-              Dashboard
+            <Link href="/data" className="hover:text-foreground">
+              Imóveis
             </Link>
           </nav>
         </SheetContent>
